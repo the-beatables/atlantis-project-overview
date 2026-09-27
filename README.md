@@ -1,286 +1,337 @@
-ATLANTIS
+# ATLANTIS
 
-AI-Powered Underwater Debris & Subsea Infrastructure Intelligence
-Smart India Hackathon 2026 | Problem Statement 26057 | Team The Beatables
+## AI-Powered Underwater Debris & Subsea Infrastructure Intelligence
 
-ATLANTIS is an AI-based Side-Scan Sonar (SSS) analysis system designed to automate the initial screening of underwater sonar imagery. It detects marine debris, provides supporting acoustic evidence, associates detections with geographic locations, and adds context from nearby subsea infrastructure.
+**Smart India Hackathon 2026 | Problem Statement 26057 | Team The Beatables**
 
-The goal is to turn large volumes of raw sonar imagery into structured information that can help survey teams identify locations requiring further inspection.
+> **From raw Side-Scan Sonar imagery to explainable, georeferenced and actionable underwater intelligence.**
 
-Problem:
+---
 
-Side-Scan Sonar surveys can generate large amounts of underwater imagery that must often be reviewed manually.
+## 🌊 Overview
 
-The important objects that may need to be identified include:
+**ATLANTIS** is an AI-powered Side-Scan Sonar (SSS) analysis system designed to automate the initial screening of underwater sonar imagery.
 
-• Shipwrecks
-• Pipes
-• Ghost nets
-• Natural seafloor clutter
-• Subsea infrastructure
+It combines:
 
-ATLANTIS addresses the first stage of this process by automatically screening sonar imagery and producing location-linked detection results.
+- 🤖 AI-based object detection
+- 🔊 Acoustic evidence analysis
+- 📍 Geospatial intelligence
+- 🔗 Subsea infrastructure awareness
+- ⚠️ Risk-based inspection prioritization
 
-Our Approach
+The goal is to help survey teams identify **what is underwater, where it is located, and which detections may require further inspection.**
+
+---
+
+## 🚨 Problem
+
+Side-Scan Sonar surveys can generate thousands of images that require manual interpretation.
+
+Important targets may include:
+
+- Shipwrecks
+- Pipes
+- Ghost nets
+- Seafloor clutter
+- Subsea pipelines
+- Cables
+- Other underwater structures
+
+Manual review can become time-consuming when large survey areas are involved.
+
+**ATLANTIS provides an automated first-pass screening layer over existing sonar survey workflows.**
+
+---
+
+## 💡 Our Approach
 
 ATLANTIS combines AI-based object detection with acoustic and spatial analysis.
 
-Side-Scan Sonar Imagery
-↓
-AI Detection
-↓
-Evidence Analysis
-↓
-Spatial Analysis
-↓
-Risk Prioritization
-↓
-Georeferenced Output
+```text
+RAW SIDE-SCAN SONAR
+        ↓
+AI DETECTION
+        ↓
+EVIDENCE ANALYSIS
+        ↓
+SPATIAL ANALYSIS
+        ↓
+RISK PRIORITIZATION
+        ↓
+GEOREFERENCED OUTPUT
+```
 
-The system is designed as a modular pipeline so that additional detection and analysis modules can be added without redesigning the complete system.
+ATLANTIS is designed as a **modular intelligence pipeline**, allowing additional detection and analysis modules to be integrated without redesigning the entire system.
 
-Key Capabilities
-Marine Debris Detection
+---
 
-The core YOLOv8n detector identifies four classes:
+# 🧠 Key Capabilities
 
-• Shipwreck
-• Pipe
-• Ghost Net
-• Rock / Seafloor Clutter
+## 01. Marine Debris Detection
 
-Pipeline & Infrastructure Detection
+The core **YOLOv8n** model detects four classes:
 
-A separate detection module is being developed for subsea infrastructure, including:
+| Class | Description |
+|---|---|
+| 🚢 Shipwreck | Man-made underwater wrecks |
+| 🔧 Pipe | Pipe-like underwater objects |
+| 🕸️ Ghost Net | Abandoned fishing nets |
+| 🪨 Rock / Seafloor Clutter | Natural seabed objects |
 
-• Pipelines
-• Cables
-• Anchors
-• Other large subsea structures
+---
 
-Acoustic Evidence
+## 02. Pipeline & Infrastructure Detection
+
+A separate infrastructure detection module is being developed to identify:
+
+- Subsea pipelines
+- Cables
+- Anchors
+- Large underwater structures
+
+This allows marine-debris detections to be analysed in relation to nearby infrastructure.
+
+---
+
+## 03. Acoustic Evidence
+
+ATLANTIS goes beyond simply drawing a bounding box.
 
 Detected objects can be analysed using:
 
-• Detection confidence
-• Object geometry
-• Acoustic-shadow information
-• Detection-specific visual evidence
+- Detection confidence
+- Object geometry
+- Acoustic-shadow information
+- Detection-specific visual evidence
 
-This provides additional context beyond the bounding box prediction.
+This provides additional evidence that can support human review.
 
-Geolocation
+---
 
-Where suitable survey and navigation metadata is available, detections can be associated with geographic coordinates.
+## 04. Geospatial Intelligence
 
-The system is designed to generate structured location-linked results such as:
+When suitable AUV / ROV navigation metadata is available, detections can be associated with geographic locations.
 
-• Latitude
-• Longitude
-• Timestamp
-• Detection class
-• Confidence
+Possible output information includes:
 
-Infrastructure Awareness
+```text
+Latitude
+Longitude
+Timestamp
+Detection Class
+Confidence
+```
 
-ATLANTIS considers the spatial relationship between marine debris and subsea infrastructure.
+---
 
-For example, debris detected close to a pipeline can be flagged for further inspection.
+## 05. Infrastructure Awareness
 
-Risk Prioritization
+ATLANTIS can analyse the spatial relationship between detected debris and subsea infrastructure.
 
-The current prototype uses detection and spatial information to categorize locations for review.
+For example:
 
-Possible outputs include:
+```text
+Marine Debris
+      +
+Nearby Pipeline
+      ↓
+Potential Inspection Priority
+```
 
-• Normal
-• Review
-• Potential Anomaly
+This helps move from **object detection** toward **infrastructure-aware inspection support**.
 
-These classifications are intended to support inspection prioritization and do not replace expert inspection.
+---
 
-Model
+## 06. Risk Prioritization
 
-The core marine-debris detector uses YOLOv8n.
+The prototype can categorize detected locations for further review using available detection and spatial information.
 
-The model was selected because of its relatively small size and suitability for future edge deployment.
+```text
+NORMAL
+   ↓
+REVIEW
+   ↓
+POTENTIAL ANOMALY
+```
 
-Training Configuration
+These classifications are intended to support inspection prioritization and do not replace expert survey interpretation.
 
-Model: YOLOv8n
-Training Images: 5,429
-Validation Images: 1,163
-Test Images: 1,164
-Total Images: 7,756
-Image Size: 640
-Epochs: 75
-Batch Size: 32
-Model Size: ~5.95 MB
+---
 
-Model Performance
+# 🤖 AI Model
 
-The current validation results are:
+The core marine-debris detector uses **YOLOv8n**.
 
-Precision: 80.5%
-Recall: 80.4%
-mAP@50: 82.2%
-mAP@50–95: 68.9%
+YOLOv8n was selected because its lightweight architecture is suitable for future edge-GPU and AUV/ROV deployment.
 
-Note: mAP@50 is used as the detection performance metric and is not referred to as overall accuracy.
+## Training Configuration
 
-System Architecture
+| Parameter | Value |
+|---|---:|
+| Model | YOLOv8n |
+| Total Images | 7,756 |
+| Training Images | 5,429 |
+| Validation Images | 1,163 |
+| Test Images | 1,164 |
+| Image Size | 640 × 640 |
+| Epochs | 75 |
+| Batch Size | 32 |
+| Model Size | ~5.95 MB |
 
-ATLANTIS follows a layered architecture:
+---
 
-Core Model
-↓
-Pipeline / Infrastructure Detection
-↓
-Spatial & Contextual Analysis
-↓
-Risk & Impact Analysis
-↓
-Actionable Output
+# 📊 Model Performance
 
-Technical Workflow
-1. Input
+Current validation results:
 
-Side-Scan Sonar imagery is provided along with available navigation metadata.
+| Metric | Result |
+|---|---:|
+| Precision | **80.5%** |
+| Recall | **80.4%** |
+| mAP@50 | **82.2%** |
+| mAP@50–95 | **68.9%** |
 
-Possible metadata includes:
+> **Note:** mAP@50 is used as the primary detection performance metric and is not referred to as overall accuracy.
 
-• GPS position
-• Timestamp
-• Heading
-• Depth
-• Survey information
+---
 
-2. Preprocessing
+# 🏗️ System Architecture
 
-The input data can undergo:
-
-• Image validation
-• Formatting
-• Noise reduction
-• Normalization
-• Tiling where required
-
-3. AI Detection
-
-YOLOv8n performs the initial marine-debris detection.
-
-The infrastructure detection module can separately identify pipeline and other large subsea structures.
-
-4. Evidence Analysis
-
-The system analyses the detection using confidence, geometry and acoustic-shadow information.
-
-5. Spatial Analysis
-
-Navigation metadata can be used to associate image detections with survey locations.
-
-The system can also examine the spatial relationship between debris and infrastructure.
-
-6. Risk Prioritization
-
-Detected locations can be assigned a review priority based on available detection and spatial information.
-
-7. Output
-
-The system produces:
-
-• Annotated sonar images
-• Bounding boxes
-• Class labels
-• Confidence values
-• Geographic coordinates
-• JSON / CSV results
-• Dashboard visualizations
-
-Technology Stack
-AI / Machine Learning
-
-• Python
-• PyTorch
-• Ultralytics YOLOv8
-• OpenCV
-
-Backend
-
-• FastAPI
-
-Frontend
-
-• React
-• JavaScript
-
-Database
-
-• MongoDB
-
-Geospatial Processing
-
-• QGIS
-
-Development & Training
-
-• Google Colab
-
-Current Development Status
-Built & Validated
-
-The following components have been developed and tested:
-
-• Core marine-debris detection model
-• YOLOv8n inference
-• Detection visualization
-• Acoustic evidence analysis
-• Geolocation workflow
-• Structured JSON / CSV output
-• Dashboard prototype
-
-Prototyped / Integrating
-
-The following components are under integration:
-
-• Pipeline detection
-• Infrastructure proximity analysis
-• Risk prioritization
-• Infrastructure-aware analysis
-
-Next Stage
-
-Planned extensions include:
-
-• Cable detection
-• Pipeline condition analysis
-• Change detection
-• Larger-scale survey processing
-• Edge GPU deployment
-• AUV / ROV integration
-
-Deployment Concept
-
-ATLANTIS is designed as a software intelligence layer that can work with existing survey infrastructure.
-
-Side-Scan Sonar
-↓
-AUV / ROV / Survey Vessel
-↓
-ATLANTIS AI Layer
-↓
-Detection & Evidence Analysis
-↓
-Geolocation & Infrastructure Context
-↓
-Dashboard / JSON / CSV / Reports
-
-The lightweight model provides a starting point for future deployment on edge GPU systems. Actual onboard AUV/ROV deployment would require hardware-specific optimization and benchmarking.
-
-Output Example
+```text
+┌─────────────────────────────────────┐
+│        CORE AI DETECTION            │
+│ YOLOv8n — Marine Debris Detection   │
+└──────────────────┬──────────────────┘
+                   ↓
+┌─────────────────────────────────────┐
+│   PIPELINE / INFRASTRUCTURE AI      │
+│ Pipelines • Cables • Structures     │
+└──────────────────┬──────────────────┘
+                   ↓
+┌─────────────────────────────────────┐
+│    SPATIAL & CONTEXTUAL ANALYSIS    │
+│ Geolocation • Proximity • Geometry  │
+└──────────────────┬──────────────────┘
+                   ↓
+┌─────────────────────────────────────┐
+│       RISK & IMPACT ANALYSIS        │
+│ Review Priority • Potential Hazard  │
+└──────────────────┬──────────────────┘
+                   ↓
+┌─────────────────────────────────────┐
+│        ACTIONABLE OUTPUT            │
+│ Dashboard • JSON • CSV • Reports    │
+└─────────────────────────────────────┘
+```
+
+---
+
+# ⚙️ Technical Workflow
+
+## 1️⃣ Input
+
+Side-Scan Sonar imagery with available survey/navigation metadata.
+
+## 2️⃣ Preprocessing
+
+- Image validation
+- Formatting
+- Normalization
+- Optional tiling
+
+## 3️⃣ AI Detection
+
+- Marine debris detection
+- Pipeline / infrastructure detection
+
+## 4️⃣ Evidence Analysis
+
+- Confidence
+- Geometry
+- Acoustic shadow
+- Visual evidence
+
+## 5️⃣ Spatial Analysis
+
+- Detection geolocation
+- Infrastructure proximity
+- Spatial relationships
+
+## 6️⃣ Risk Prioritization
+
+Potential inspection priorities are generated from available detection and spatial information.
+
+## 7️⃣ Output
+
+- Annotated sonar images
+- Detection labels
+- Confidence values
+- Geographic coordinates
+- JSON / CSV
+- Dashboard visualizations
+
+---
+
+# 🛠️ Technology Stack
+
+| Layer | Technologies |
+|---|---|
+| AI / ML | Python, PyTorch, YOLOv8 |
+| Computer Vision | OpenCV |
+| Backend | FastAPI |
+| Frontend | React, JavaScript |
+| Database | MongoDB |
+| Geospatial | QGIS |
+| Training | Google Colab |
+| Deployment | Cloud GPU → Edge GPU → AUV/ROV |
+
+---
+
+# 🚀 Current Development Status
+
+| Component | Status |
+|---|---|
+| Marine Debris Detection | ✅ Built & Validated |
+| YOLOv8n Inference | ✅ Built & Validated |
+| Detection Visualization | ✅ Built & Validated |
+| Acoustic Evidence Analysis | ✅ Built & Validated |
+| Geolocation Workflow | ✅ Built & Validated |
+| JSON / CSV Output | ✅ Built & Validated |
+| Dashboard Prototype | ✅ Built & Validated |
+| Pipeline Detection | 🟡 Prototyped / Integrating |
+| Infrastructure Proximity | 🟡 Prototyped / Integrating |
+| Risk Prioritization | 🟡 Prototyped / Integrating |
+| Cable Detection | ⚪ Next Stage |
+| Pipeline Condition Analysis | ⚪ Next Stage |
+| Change Detection | ⚪ Next Stage |
+| Edge / AUV Deployment | ⚪ Next Stage |
+
+---
+
+# 🖥️ Prototype
+
+The current prototype demonstrates:
+
+- Multi-image sonar inference
+- AI-based object detection
+- Annotated sonar outputs
+- Acoustic evidence analysis
+- Structured JSON results
+- Geospatial workflow
+- Dashboard visualization
+
+## 🎥 Prototype Demo
+
+**[Watch the ATLANTIS Prototype](YOUR_YOUTUBE_LINK_HERE)**
+
+---
+
+# 📦 Example Output
 
 A typical structured result can contain information such as:
 
+```json
 {
   "image": "sample_sonar_001.jpg",
   "detections": [
@@ -296,65 +347,99 @@ A typical structured result can contain information such as:
   },
   "status": "review"
 }
+```
 
-The coordinates shown above are example values and are not real survey coordinates.
+> The coordinates above are example values and do not represent real survey locations.
 
-Prototype
+---
 
-A working prototype demonstrates the sonar detection workflow, model outputs and dashboard functionality.
+# 🔬 Research Foundation
 
-Prototype Demonstration
+ATLANTIS builds on research and datasets related to:
 
-Watch the ATLANTIS Prototype: YOUR_YOUTUBE_LINK_HERE
+- Side-Scan Sonar target detection
+- Underwater object detection
+- Marine debris detection
+- Subsea pipeline detection
+- Acoustic-shadow analysis
+- AUV / ROV inspection
+- Geospatial sonar analysis
 
-Research & Dataset References
+Relevant dataset and research references are documented in the project documentation.
 
-ATLANTIS builds on existing research in:
+---
 
-• Side-Scan Sonar target detection
-• Underwater object detection
-• Marine debris detection
-• Subsea pipeline detection
-• Acoustic-shadow analysis
-• AUV / ROV-based underwater inspection
+# 📁 Repository Structure
 
-Dataset sources and relevant research references are documented separately in the documentation/ directory.
-
-Repository Structure
-
+```text
 ATLANTIS/
 │
 ├── README.md
 │
 ├── architecture/
-│ └── system-architecture.png
+│   └── system-architecture.png
 │
 ├── documentation/
-│ ├── methodology.md
-│ ├── dataset.md
-│ └── deployment.md
+│   ├── methodology.md
+│   ├── dataset.md
+│   └── deployment.md
 │
 ├── results/
-│ ├── model-performance.png
-│ ├── training-validation.png
-│ └── sample-output.json
+│   ├── model-performance.png
+│   ├── training-validation.png
+│   └── sample-output.json
 │
 ├── demo/
-│ └── demo-link.md
+│   └── demo-link.md
 │
 └── .gitignore
+```
 
-Project Team
-The Beatables
+---
 
-Smart India Hackathon 2026
+# 🔮 Future Scope
 
-Problem Statement: 26057
-Theme: Disaster Management
-Category: Software
+ATLANTIS is designed to expand beyond initial marine-debris detection.
 
-Disclaimer
+```text
+MARINE DEBRIS
+      ↓
+PIPELINE DETECTION
+      ↓
+CABLE DETECTION
+      ↓
+CONDITION ANALYSIS
+      ↓
+CHANGE DETECTION
+      ↓
+AUTONOMOUS RETASKING
+```
+
+Future development areas include:
+
+- Cable detection
+- Pipeline condition analysis
+- Change detection across repeat surveys
+- Larger-scale survey processing
+- Edge-GPU optimization
+- AUV / ROV onboard inference
+
+---
+
+# 👥 Team
+
+## The Beatables
+
+**Smart India Hackathon 2026**
+
+**Problem Statement:** 26057  
+**Theme:** Disaster Management  
+**Category:** Software
+
+---
+
+# ⚠️ Disclaimer
 
 ATLANTIS is a research and prototype system developed for Smart India Hackathon 2026.
 
-Detection results are intended to support initial sonar screening and inspection prioritization. They should not be treated as a replacement for expert survey interpretation, physical inspection or certified subsea asset assessment.
+The system is intended to support **initial sonar screening and inspection prioritization**. Its outputs should not be treated as a replacement for expert survey interpretation, physical inspection, or certified subsea asset assessment.
